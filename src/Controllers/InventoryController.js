@@ -14,6 +14,7 @@ const _getPlayer = async function(playerId) {
     return new Player(result[0]);
 };
 
+/* Delete an item from a users inventory */
 const del =  async function(request, res, next) {
     if (isNaN(request.params.playerId)) {
         res.status(400);
@@ -23,6 +24,7 @@ const del =  async function(request, res, next) {
         });
     }
 
+    // lock the inventory resource
     const lock = await Redlock.lock(`lock:players:${request.params.playerId}:inventory`, 3000);
 
     let player = await _getPlayer(request.params.playerId);
@@ -60,6 +62,8 @@ const del =  async function(request, res, next) {
     }
 };
 
+/* Add an item to a users inventory */
+
 const add = async function(request, res, next) {
 
     if (isNaN(request.params.playerId)) {
@@ -69,7 +73,7 @@ const add = async function(request, res, next) {
             message: 'Malformed input'
         });
     }
-
+    // lock the inventory resource
     const lock = await Redlock.lock(`lock:players:${request.params.playerId}:inventory`, 3000);
 
     let player = await _getPlayer(request.params.playerId);
@@ -116,6 +120,8 @@ const add = async function(request, res, next) {
     }
 };
 
+/* Request all items in a users inventory */
+
 const all = async function(request, res, next) {
 
     if (isNaN(request.params.playerId)) {
@@ -126,6 +132,7 @@ const all = async function(request, res, next) {
         });
     }
 
+    // lock the inventory resource
     const lock = await Redlock.lock(`lock:players:${request.params.playerId}:inventory`, 3000);
 
     let player = await _getPlayer(request.params.playerId);

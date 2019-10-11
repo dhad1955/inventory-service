@@ -24,8 +24,6 @@ Start the server by running the entrypoint script
 
 ``` npm start ```
 
-P
-
 # Endpoints
 **Retrieve all items from a players inventory**
 ```

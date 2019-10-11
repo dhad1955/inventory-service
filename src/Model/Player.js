@@ -18,6 +18,7 @@ class Inventory {
         this.player = player;
     }
 
+    /* Add item to users inventory */
     async addItem(itemId, amount) {
         const item = await Database.getInstance().query('SELECT * FROM items where id = ?', [itemId]);
         if (!item.length) {
@@ -66,6 +67,7 @@ class Inventory {
         };
     }
 
+    /* Delete item from users inventory */
     async removeItem(id, amount) {
         const item = await Database.getInstance().query('SELECT * FROM inventory_items WHERE id = ? and player_id = ?', [id, this.player.data.id]);
         if(!item.length) {
@@ -103,5 +105,4 @@ class Inventory {
         return await Database.getInstance().query('SELECT * FROM inventory_items WHERE player_id = ?', [this.player.data.id]);
     }
 }
-
 module.exports = Player;
